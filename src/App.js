@@ -13,6 +13,16 @@ class App extends Component {
        userNameInput: '',
     };
 
+    handleTextClick(id){
+        const posts = this.state.posts.map(post =>{
+            if(post.id == id) {
+                post.color = 'green'
+            }
+            return post
+        });
+        this.setState({posts: posts});
+    }
+
     renderPosts(){
         return this.state.posts.map((post, index) => {
             const description = `${post.author} - ${post.time}`;
@@ -20,6 +30,9 @@ class App extends Component {
                 <Post text={post.text}
                     author={description}
                     key={index}
+                    id={post.id}
+                    color={post.color}
+                    turnMeGreen={(id) => this.handleTextClick(id)}
                 />
             )
         }).reverse()
@@ -31,6 +44,7 @@ class App extends Component {
     handleUserNameInputChange(e){
         this.setState({userNameInput: e.target.value})
     }
+
     handleSubmitPost(){
         const newPost = {
             author: this.state.userNameInput,
