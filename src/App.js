@@ -15,7 +15,7 @@ class App extends Component {
 
     handleTextClick(id){
         const posts = this.state.posts.map(post =>{
-            if(post.id == id) {
+            if(post.id === id) {
                 post.color = 'green'
             }
             return post
@@ -26,9 +26,20 @@ class App extends Component {
     renderPosts(){
         return this.state.posts.map((post, index) => {
             const description = `${post.author} - ${post.time}`;
+            // added in changes to the background based of postion on page.
+
+            if (index == 0) {
+                post.backgroundColor = 'red'  
+            } else if (index == 1) {
+                post.backgroundColor = 'yellow' 
+            } else {
+                post.backgroundColor= 'green' 
+            }
+
             return (
                 <Post text={post.text}
                     author={description}
+                    backgroundColor={post.backgroundColor}
                     key={index}
                     id={post.id}
                     color={post.color}
@@ -53,15 +64,18 @@ class App extends Component {
             time: new Date()
         };
         const posts = this.state.posts.map(post => post);
+        // removed the first post. So there will only be the three most recent posts
+        posts.shift();
         posts.push(newPost);
         this.setState({posts, postInput: '', userNameInput: '',})
     }
+    
 
-    renderSubmit(){
+    renderSubmit =() => {
        if (this.state.postInput && this.state.userNameInput) {
-           return <button onClick={() => this.handleSubmitPost()}>Submit post</button>
+           return <button onClick={(e) => this.handleSubmitPost(e)}>Submit post</button>
        }
-    }
+    };
 
     render() {
       return (
@@ -84,3 +98,4 @@ class App extends Component {
 
 
 export default App;
+
