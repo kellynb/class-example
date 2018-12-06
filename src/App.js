@@ -26,6 +26,7 @@ class App extends Component {
     renderPosts(){
         return this.state.posts.map((post, index) => {
             const description = `${post.author} - ${post.time}`;
+            
             // added in changes to the background based of postion on page.
             if (index == 0) {
                 post.backgroundColor = 'red'  
